@@ -1,0 +1,28 @@
+#!/usr/bin/python
+from __future__ import print_function
+import argparse
+import sys
+import time
+
+"""
+A small script that imitates the API of the /sbin/zfs binary that we can use for testing.
+"""
+
+parser = argparse.ArgumentParser()
+parser.add_argument("action", type=str, help="filesystem")
+parser.add_argument("-L", "--keylocation", type=str, help="keylocation")
+parser.add_argument("filesystem", type=str, help="filesystem")
+args = parser.parse_args()
+
+time.sleep(0.3)
+
+if args.keylocation:
+  key = args.keylocation
+else:
+  print("Enter key: ", end='')
+  try:
+    key = sys.stdin.readline()
+  except:
+    sys.exit(1)
+
+time.sleep(1)

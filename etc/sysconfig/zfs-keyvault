@@ -1,0 +1,23 @@
+# Configuration for loading ZFS keys from Azure Key Vault
+
+# Prefix used for secret name in Azure Key Vault. Secret holding the ZFS
+# encryption key is expected to be named in format: $PREFIX-zfs-$FILESYSTEM.
+# Because Azure KV secret names must be alphanumeric, replace any '/' for '-'.
+PREFIX=""
+
+# Filesystems to load keys for.
+# You can get a list of current encryption roots using:
+# zfs get -r encryptionroot -H | cut -f3 | grep -v -e '^-$' | uniq | sort
+FILESYSTEMS=""
+
+# Tenant ID or name from AAD
+AAD_TENANT=""
+
+# Application ID for the AAD native app registration
+AAD_CLIENT_ID=""
+
+# Azure Key Vault URI
+KEYVAULT_URI="https://YOUR_KVNAME.vault.azure.net"
+
+# Technique used to load keys with 'zfs load-key'
+METHOD="stdin"

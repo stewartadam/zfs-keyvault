@@ -1,0 +1,15 @@
+[Unit]
+Description=Load ZFS keys from Azure Key Vault
+After=network-online.target
+After=zfs.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=-/etc/sysconfig/zfs-keyvault
+RemainAfterExit=yes
+ExecStart=/usr/bin/dotnet /usr/share/zfs-keyvault/zfs-keyvault.dll --prefix $PREFIX --clientId $AAD_CLIENT_ID --tenant $AAD_TENANT --keyvault-uri $KEYVAULT_URI --method $METHOD $FILESYSTEMS
+ExecStartPost=-/bin/systemctl restart zfs-mount.service
+TimeoutStartSec=120
+
+[Install]
+WantedBy=multi-user.target
