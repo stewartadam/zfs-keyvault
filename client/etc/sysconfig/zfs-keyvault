@@ -1,0 +1,5 @@
+# Configuration for loading ZFS keys from Azure Key Vault
+
+# zfs-keyvault gateway URI
+GATEWAY_URI="https://your-server.tld/request-keys"
+

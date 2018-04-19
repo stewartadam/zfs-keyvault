@@ -7,7 +7,7 @@ After=zfs.target
 Type=oneshot
 EnvironmentFile=-/etc/sysconfig/zfs-keyvault
 RemainAfterExit=yes
-ExecStart=/usr/bin/dotnet /usr/share/zfs-keyvault/zfs-keyvault.dll --prefix $PREFIX --clientId $AAD_CLIENT_ID --tenant $AAD_TENANT --keyvault-uri $KEYVAULT_URI --method $METHOD $FILESYSTEMS
+ExecStart=zkv mount "$GATEWAY_URI"
 ExecStartPost=-/bin/systemctl restart zfs-mount.service
 TimeoutStartSec=120
 

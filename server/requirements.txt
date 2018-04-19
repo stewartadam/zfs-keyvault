@@ -1,0 +1,7 @@
+flask
+flask-failsafe
+flask-sqlalchemy
+flask-limiter
+requests
+adal
+twilio
