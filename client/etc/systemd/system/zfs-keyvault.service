@@ -7,7 +7,7 @@ After=zfs.target
 Type=oneshot
 EnvironmentFile=-/etc/sysconfig/zfs-keyvault
 RemainAfterExit=yes
-ExecStart=zkv mount "$GATEWAY_URI"
+ExecStart=/usr/local/bin/zkv mount "$GATEWAY_URI"
 ExecStartPost=-/bin/systemctl restart zfs-mount.service
 TimeoutStartSec=120
 
