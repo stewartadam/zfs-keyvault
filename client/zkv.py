@@ -91,16 +91,17 @@ if __name__ == "__main__":
     if options.action == "fetch":
         r = requests.get(options.gateway_uri)
         if r.status_code == 200:
-            encryption_key = r.text
-            print(encryption_key)
+            repository_key = r.text
+            print(repository_key)
         else:
             sys.stderr.write("Error: attempt to obtain encryption keys failed due to invalid HTTP status code %d\n" % r.status_code)
             sys.exit(1)
     elif options.action == "mount":
         r = requests.get(options.gateway_uri)
         if r.status_code == 200:
-            encryption_key = r.text
-            fs = zkv.read(encryption_key)
+            repository_key = r.text
+            zkv = KeyRepository(repository_path, repository_key)
+            fs = zkv.read()
             for filesystem, encryption_key in fs.items():
                 child = pexpect.spawn("zfs", ["load-key", filesystem])
                 child.expect(":", timeout=10)
