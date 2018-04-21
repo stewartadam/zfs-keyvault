@@ -1,3 +1,5 @@
+SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/db.sqlite'
+
 MAX_WAIT = 30
 PIN_LENGTH = 6
 
