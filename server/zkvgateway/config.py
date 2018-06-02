@@ -1,11 +1,15 @@
-class DefaultConfig(object):
+from flask_env import MetaFlaskEnv
+
+class DefaultConfig(metaclass=MetaFlaskEnv):
+    ENV_PREFIX = 'ZKV_'
+
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     AAD_RESOURCE = 'https://vault.azure.net'
     AAD_AUTHORITY_HOST_URI = 'https://login.microsoftonline.com'
-    MAX_WAIT = 30
+    MAX_WAIT = 60
     PIN_LENGTH = 6
 
     AAD_CLIENT_ID = 'guid-here'
