@@ -30,7 +30,7 @@ class KeyRepository():
             f = Fernet(self.repository_key)
             data = f.decrypt(key_store.read())
             self.repository = json.loads(data)
-        return self.repository
+        return self.repository.copy()
 
     def write(self):
         with open(self.repository_path, 'wb') as key_store:
