@@ -80,7 +80,7 @@ class Program:
         fs_action_init_p.add_argument("-k", "--repository-key", help="Supply the base64-encoded Fernet key used to encrypt the repository")
 
         for cmd in [fs_action_list_p, fs_action_add_p, fs_action_remove_p]:
-            cmd.add_argument("repository_key", help="Base64-encoded Fernet encryption key for the repository")
+            cmd.add_argument("-k", "--repository_key", help="Base64-encoded Fernet encryption key for the repository", required=True)
 
         for cmd in [fs_action_add_p, fs_action_remove_p]:
             cmd.add_argument("filesystem", help="Name of ZFS filesystem including pool (e.g. tank/myfs)")
