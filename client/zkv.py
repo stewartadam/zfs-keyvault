@@ -99,7 +99,7 @@ class Program:
             sys.stderr.write("Error: attempt to obtain encryption keys failed due to invalid HTTP status code %d\n" % r.status_code)
             sys.exit(1)
 
-    def __load_key_pexpect(self):
+    def __load_key_pexpect(self, filesystem, encryption_key):
         child = pexpect.spawn("zfs", ["load-key", filesystem])
         child.expect(":", timeout=10)
         child.sendline(encryption_key)
