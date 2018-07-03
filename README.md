@@ -98,6 +98,9 @@ I'm not committed to any of these at this time, but ideas for improvement (or PR
 * Implement one-time password mechanism instead of random PIN
 * Consider additional security protections (e.g. dead-man switch, remote wipe, key rotation)
 * Generalize pattern for other encryption providers (e.g. LUKS or dm-crypt)
+  * Modularize the key loaders to support different commands
+  * Alter repo store to support multiple encryption types on the same system
+* If possible, leverage cryptsetup.target in systemd
 
 ## Known issues
-* SMS is insecure
+* SMS is insecure, and needs an additional challenge or switch to other communication mechanism
