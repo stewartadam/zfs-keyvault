@@ -11,6 +11,8 @@ In short, it's the `network-online.target` equivalent for ZFS encrypted filesyst
 
 The system can now decrypt the local repository and mount the encrypted ZFS filesystems, without the filesystem encryption keys ever leaving the device.
 
+![Architecture diagram](docs/zfs-keyvault.png)
+
 ## Features
 - Mounts ZFS encrypted filesystems without the filesystem keys leaving the device
 - Notifies owner via SMS for approval of any key requests
