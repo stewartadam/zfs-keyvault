@@ -1,7 +1,9 @@
 [Unit]
 Description=Load ZFS keys from Azure Key Vault
 After=network-online.target
+Wants=network-online.target
 After=zfs.target
+Wants=zfs.target
 
 [Service]
 Type=oneshot
