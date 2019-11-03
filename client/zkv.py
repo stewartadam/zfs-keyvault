@@ -55,11 +55,11 @@ class Program:
     def __init__(self, repository_path):
         self.repository_path = repository_path
 
-        root_parser = argparse.ArgumentParser(description="ZFS integration with Azure Key Vault")
+        self.root_parser = argparse.ArgumentParser(description="ZFS integration with Azure Key Vault")
 
         # Create the parsers for top-level commands
-        subparser = root_parser.add_subparsers(help='commands', dest='action')
-        fs_action_p = subparser.add_parser('fs', help='Configure a local, encrypted repository of ZFS filesystem encryption keys')
+        subparser = self.root_parser.add_subparsers(help='commands', dest='action')
+        self.fs_action_p = subparser.add_parser('fs', help='Configure a local, encrypted repository of ZFS filesystem encryption keys')
         fetch_action_p = subparser.add_parser('fetch', help="Fetch repository's encryption key and print it")
         mount_action_p = subparser.add_parser('mount', help="Fetch repository's encryption key and mount all configured ZFS filesystems")
 
@@ -68,7 +68,7 @@ class Program:
             cmd.add_argument("gateway_uri", help="URI to the ZFS Key Vault Gateway providing the keys")
 
         # Create the parsers for fs commands
-        fs_action_sp = fs_action_p.add_subparsers(help='fs commands', dest='fs_action')
+        fs_action_sp = self.fs_action_p.add_subparsers(help='fs commands', dest='fs_action')
         fs_action_init_p = fs_action_sp.add_parser('init', help='Initialize a local, encrypted repository')
         fs_action_list_p = fs_action_sp.add_parser('list', help='List configured filesystems in the repository')
         fs_action_add_p = fs_action_sp.add_parser('add', help="Add a filesystem encryption key to the repository")
@@ -89,7 +89,7 @@ class Program:
         fs_action_remove_p.add_argument("-f", "--force", action='store_true', help="Proceed normally if filesystem does not exist in repository")
         fs_action_list_p.add_argument("-p", "--plaintext", action='store_true', help="Print configured encryption key in plaintext")
 
-        self.options = root_parser.parse_args()
+        self.options = self.root_parser.parse_args()
 
     def __fetch_repo_key(self):
         r = requests.get(self.options.gateway_uri)
@@ -99,7 +99,7 @@ class Program:
             sys.stderr.write("Error: attempt to obtain encryption keys failed due to invalid HTTP status code %d\n" % r.status_code)
             sys.exit(1)
 
-    def __load_key_pexpect(self):
+    def __load_key_pexpect(self, filesystem, encryption_key):
         child = pexpect.spawn("zfs", ["load-key", filesystem])
         child.expect(":", timeout=10)
         child.sendline(encryption_key)
@@ -188,10 +188,10 @@ class Program:
             elif self.options.fs_action == "remove":
                 p.fs_remove()
             else:
-                fs_action_p.print_usage()
+                self.fs_action_p.print_usage()
                 sys.exit(1)
         else:
-            root_parser.print_usage()
+            self.root_parser.print_usage()
             sys.exit(1)
 
 if __name__ == "__main__":
